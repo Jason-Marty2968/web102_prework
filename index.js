@@ -81,13 +81,13 @@ gamesCard.innerHTML = GAMES_JSON.length;
 
 
 // grab the amount raised card, then use reduce() to find the total amount raised
-const raisedCard = document.getElementById("total-raised");
+
 
 // set inner HTML using template literal
 
 
 // grab number of games card and set its inner HTML
-const gamesCard = document.getElementById("num-games");
+
 
 
 /*************************************************************************************
@@ -95,6 +95,11 @@ const gamesCard = document.getElementById("num-games");
  * total number of contributions, amount donated, and number of games on the site.
  * Skills used: functions, filter
 */
+
+const unfundedBtn = document.getElementById("unfunded-btn");
+const fundedBtn = document.getElementById("funded-btn");
+const allBtn = document.getElementById("all-btn");
+
 
 // show only games that do not yet have enough funding
 function filterUnfundedOnly() {
