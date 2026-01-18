@@ -58,14 +58,20 @@ addGamesToPage(GAMES_JSON);
 */
 
 // grab the contributions card element
+// total contributions (sum of backers)
 const contributionsCard = document.getElementById("num-contributions");
 const totalContributions = GAMES_JSON.reduce((acc, game) => acc + game.backers, 0);
-contributionsCard.innerHTML = `${totalContributions.toLocaleString()}`;
+contributionsCard.innerHTML = totalContributions.toLocaleString();
 
+// total amount raised (sum of pledged)
+const raisedCard = document.getElementById("total-raised");
 const totalRaised = GAMES_JSON.reduce((acc, game) => acc + game.pledged, 0);
 raisedCard.innerHTML = `$${totalRaised.toLocaleString()}`;
 
-gamesCard.innerHTML = `${GAMES_JSON.length}`;
+// number of games
+const gamesCard = document.getElementById("num-games");
+gamesCard.innerHTML = GAMES_JSON.length;
+
 
 
 // use reduce() to count the number of total contributions by summing the backers
@@ -93,14 +99,14 @@ const gamesCard = document.getElementById("num-games");
 // show only games that do not yet have enough funding
 function filterUnfundedOnly() {
     deleteChildElements(gamesContainer);
-    const unfundedGames = GAMES_JSON.filter(game => game.pledged < game.goal);
-    addGamesToPage(unfundedGames);
+    const unfunded = GAMES_JSON.filter(game => game.pledged < game.goal);
+    addGamesToPage(unfunded);
 }
 
 function filterFundedOnly() {
     deleteChildElements(gamesContainer);
-    const fundedGames = GAMES_JSON.filter(game => game.pledged >= game.goal);
-    addGamesToPage(fundedGames);
+    const funded = GAMES_JSON.filter(game => game.pledged >= game.goal);
+    addGamesToPage(funded);
 }
 
 function showAllGames() {
@@ -112,6 +118,7 @@ unfundedBtn.addEventListener("click", filterUnfundedOnly);
 fundedBtn.addEventListener("click", filterFundedOnly);
 allBtn.addEventListener("click", showAllGames);
 
+
 // add event listeners with the correct functions to each button
 
 
@@ -122,13 +129,15 @@ allBtn.addEventListener("click", showAllGames);
 
 const unfundedCount = GAMES_JSON.filter(game => game.pledged < game.goal).length;
 
-const displayStr = `A total of $${totalRaised.toLocaleString()} has been raised for ${GAMES_JSON.length} games. 
-Currently, ${unfundedCount} ${unfundedCount === 1 ? "game remains" : "games remain"} unfunded. 
-We need your help to fund these amazing projects!`;
+const descriptionStr = `
+A total of $${totalRaised.toLocaleString()} has been raised for ${GAMES_JSON.length} games.
+Currently, ${unfundedCount} ${unfundedCount === 1 ? "game remains" : "games remain"} unfunded.
+We need your help to fund these amazing projects!
+`;
 
-const descriptionElement = document.createElement("p");
-descriptionElement.innerHTML = displayStr;
-descriptionContainer.appendChild(descriptionElement);
+const descElement = document.createElement("p");
+descElement.innerHTML = descriptionStr;
+descriptionContainer.appendChild(descElement);
 
 /************************************************************************************
  * Challenge 7: Select & display the top 2 games
